@@ -40,6 +40,8 @@ namespace nc
 
 		m_context = SDL_GL_CreateContext(m_window);
 		gladLoadGL();
+
+		glViewport(0, 0, width, height);
 	}
 
 	void Renderer::BeginFrame()
