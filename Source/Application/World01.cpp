@@ -40,7 +40,7 @@ namespace nc
 
         // render
         glPushMatrix();
-        //glTranslatef(m_positions[i].x, m_positions[i].y, 0);
+        glTranslatef(m_position.x, m_position.y, 0);
         //glRotatef(m_angle, 1.0f, 1.0f, 1.0f);
         glScalef((sinf(m_time) + 1) * 0.5f, 1, 1);
 
