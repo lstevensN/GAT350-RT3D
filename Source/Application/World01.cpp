@@ -10,7 +10,7 @@ namespace nc
     {
         for (int i = 0; i < 10; i++) 
         {
-            m_positions.push_back();
+            //m_positions.push_back();
         }
 
         return true;
@@ -40,7 +40,7 @@ namespace nc
 
         // render
         glPushMatrix();
-        glTranslatef(m_positions[i].x, m_positions[i].y, 0);
+        //glTranslatef(m_positions[i].x, m_positions[i].y, 0);
         //glRotatef(m_angle, 1.0f, 1.0f, 1.0f);
         glScalef((sinf(m_time) + 1) * 0.5f, 1, 1);
 
