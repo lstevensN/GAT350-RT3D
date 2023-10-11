@@ -1,6 +1,5 @@
 #pragma once
 #include "Framework/World.h"
-#include "Core/Math/Vector2.h"
 #include "Renderer/Renderer.h"
 #include "Renderer/Program.h"
 #include <vector>
@@ -16,11 +15,13 @@ namespace nc
 		void Draw(Renderer& renderer) override;
 
 	private:
-		float m_angle = 0;
 		float m_time;
-		vec2 m_position;
+		float m_speed = 5;
+
+		Transform m_transform;
 		
 		GLuint m_vao = 0;
 		res_t<Program> m_program;
+		res_t<Texture> m_texture;
 	};
 }
