@@ -1,7 +1,7 @@
 #pragma once
 #include "Framework/World.h"
 #include "Renderer/Renderer.h"
-#include "Renderer/Program.h"
+#include "Core/Math/Transform.h"
 #include <vector>
 
 namespace nc
@@ -23,5 +23,6 @@ namespace nc
 		res_t<VertexBuffer> m_vertexBuffer;
 		res_t<Program> m_program;
 		res_t<Texture> m_texture;
+		res_t<Material> m_material;
 	};
 }

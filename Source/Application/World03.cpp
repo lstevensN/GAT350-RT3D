@@ -10,12 +10,7 @@ namespace nc
 {
     bool World03::Initialize()
     {
-        m_program = GET_RESOURCE(Program, "shaders/unlit_texture.prog"); 
-        m_program->Use();
-
-        m_texture = GET_RESOURCE(Texture, "textures/llama.png");
-        m_texture->Bind();
-        m_texture->SetActive(GL_TEXTURE0);
+        m_material = GET_RESOURCE(Material, "materials/quad.mtrl");
 
         // vertex data
         float vertexData[] = {
@@ -25,7 +20,7 @@ namespace nc
              0.8f,  0.8f,  0.0f,  1.0f,  1.0f,  1.0f,  1.0f,  1.0f
         };
 
-        m_vertexBuffer = GET_RESOURCE(VertexBuffer, "vb");
+        m_vertexBuffer = std::make_shared<VertexBuffer>();
         m_vertexBuffer->CreateVertexBuffer(sizeof(vertexData), 4, vertexData);
 
         m_vertexBuffer->SetAttribute(0, 3, 8 * sizeof(GLfloat), 0);                  // position 
@@ -49,9 +44,6 @@ namespace nc
         ImGui::DragFloat3("Rotation", &m_transform.rotation[0]);
         ImGui::End();
 
-        if (m_transform.rotation.z < 360) m_transform.rotation.z += 180 * dt;
-        else m_transform.rotation.z = 3;
-
         m_transform.position.x += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_A) ? m_speed * -dt : 0;
         m_transform.position.x += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_D) ? m_speed *  dt : 0;
         m_transform.position.z += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_S) ? m_speed * -dt : 0;
@@ -59,19 +51,19 @@ namespace nc
 
         m_time += dt;
 
-        m_program->SetUniform("offset", glm::vec2{ m_time, 0 });
-        m_program->SetUniform("tiling", glm::vec2{ 2, 2 });
+        m_material->ProcessGUI();
+        m_material->Bind();
 
         // model matrix
-        m_program->SetUniform("model", m_transform.GetMatrix());
+        m_material->GetProgram()->SetUniform("model", m_transform.GetMatrix());
 
         // view matrix
         glm::mat4 view = glm::lookAt(glm::vec3{ 0, 0, 3 }, glm::vec3{ 0, 0, 0 }, glm::vec3{ 0, 1, 0 }); // Where the camera is, where the camera is looking, up vector
-        m_program->SetUniform("view", view);
+        m_material->GetProgram()->SetUniform("view", view);
 
         // projection matrix
         glm::mat4 projection = glm::perspective(glm::radians(70.0f), 800.0f / 600.0f, 0.01f, 100.0f);
-        m_program->SetUniform("projection", projection);
+        m_material->GetProgram()->SetUniform("projection", projection);
 
         ENGINE.GetSystem<Gui>()->EndFrame();
     }
