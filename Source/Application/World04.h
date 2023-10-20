@@ -18,6 +18,10 @@ namespace nc
 		float m_time;
 		float m_speed = 5;
 
+		glm::vec3 m_ambientLight = { 0.2, 0.2, 0.2 };
+		glm::vec3 m_diffuseLight = { 1, 1, 1 };
+		glm::vec3 m_lightPosition = { 0, 8, 0 };
+
 		Transform m_transform;
 		res_t<Model> m_model;
 		
