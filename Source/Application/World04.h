@@ -38,7 +38,6 @@ namespace nc
 		float m_time;
 		float m_speed = 5;
 
-		//light_t m_light;
 		light_t m_lights[3];
 		int m_selected = 0;
 		glm::vec3 m_ambientLight{ 0.2f };

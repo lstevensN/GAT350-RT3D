@@ -101,5 +101,8 @@
     <None Include="..\..\Build\Assets\Materials\multi.mtrl">
       <Filter>Materials</Filter>
     </None>
+    <None Include="..\..\Build\Assets\Materials\squirrel.mtrl">
+      <Filter>Materials</Filter>
+    </None>
   </ItemGroup>
 </Project>

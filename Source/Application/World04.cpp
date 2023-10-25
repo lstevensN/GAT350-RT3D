@@ -11,38 +11,21 @@ namespace nc
 {
     bool World04::Initialize()
     {
-        auto material = GET_RESOURCE(Material, "materials/multi.mtrl");
+        auto material = GET_RESOURCE(Material, "materials/squirrel.mtrl");
         m_model = std::make_shared<Model>();
         m_model->SetMaterial(material);
-        m_model->Load("models/plane.obj");
-        m_transform.position.y = -1;
-        //m_model->Load("models/cube.obj", glm::vec3{ 0 }, glm::vec3{ -90, 0, 0 });
+        m_model->Load("models/squirrel.glb", glm::vec3{ 0, -0.7f, 0 }, glm::vec3{ 0 }, glm::vec3{ 0.4f });
 
         for (int i = 0; i < 3; i++) {
             m_lights[i].type = light_t::eType::Point;
             m_lights[i].position = glm::vec3{ randomf(-5, 5), randomf(1, 8), randomf(-5, 5) };
             m_lights[i].direction = glm::vec3{ 0, -1, 0 };
-            m_lights[i].color = glm::rgbColor(glm::vec3{ randomf(0, 1) * 360, 1, 1 });
+            m_lights[i].color = glm::rgbColor(glm::vec3{ randomf() * 360, 1, 1 });
             m_lights[i].intensity = 1.0f;
             m_lights[i].range = 6;
             m_lights[i].innerAngle = 10.0f;
             m_lights[i].outerAngle = 30.0f;
         }
-
-        //// vertex data
-        //float vertexData[] = {
-        //    -0.8f, -0.8f,  0.0f,  1.0f,  0.0f,  0.0f,  0.0f,  0.0f,
-        //    -0.8f,  0.8f,  0.0f,  0.0f,  1.0f,  0.0f,  0.0f,  1.0f,
-        //     0.8f, -0.8f,  0.0f,  0.0f,  0.0f,  1.0f,  1.0f,  0.0f,
-        //     0.8f,  0.8f,  0.0f,  1.0f,  1.0f,  1.0f,  1.0f,  1.0f
-        //};
-
-        //m_vertexBuffer = std::make_shared<VertexBuffer>();
-        //m_vertexBuffer->CreateVertexBuffer(sizeof(vertexData), 4, vertexData);
-
-        //m_vertexBuffer->SetAttribute(0, 3, 8 * sizeof(GLfloat), 0);                  // position 
-        //m_vertexBuffer->SetAttribute(1, 3, 8 * sizeof(GLfloat), 3 * sizeof(float));  // color 
-        //m_vertexBuffer->SetAttribute(2, 2, 8 * sizeof(GLfloat), 6 * sizeof(float));  // texcoord
 
         return true;
     }
@@ -59,6 +42,17 @@ namespace nc
         ImGui::DragFloat3("Position", &m_transform.position[0], 0.1f);
         ImGui::DragFloat3("Rotation", &m_transform.rotation[0]);
         ImGui::DragFloat3("Scale", &m_transform.scale[0], 0.1f);
+        ImGui::End();
+
+        ImGui::Begin("Scene");
+        ImGui::ColorEdit3("Ambient Color", glm::value_ptr(m_ambientLight));
+        ImGui::Separator();
+
+        for (int i = 0; i < 3; i++)
+        {
+            std::string name = "light" + std::to_string(i);
+            if (ImGui::Selectable(name.c_str(), m_selected == i)) m_selected = i;
+        }
         ImGui::End();
 
         ImGui::Begin("Light");
@@ -79,7 +73,6 @@ namespace nc
         ImGui::ColorEdit3("Color", glm::value_ptr(m_lights[m_selected].color));
         ImGui::DragFloat3("Intensity", &m_lights[m_selected].intensity, 0.1f, 0, 10);
         
-        ImGui::ColorEdit3("Ambient Color", glm::value_ptr(m_ambientLight));
         ImGui::End();
 
         m_transform.position.x += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_A) ? m_speed * -dt : 0;
