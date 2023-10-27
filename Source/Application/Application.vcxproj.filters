@@ -11,6 +11,9 @@
     <Filter Include="Materials">
       <UniqueIdentifier>{b2cb0f61-613d-43c6-bd67-8e692f0b44c6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scenes">
+      <UniqueIdentifier>{6a5b3555-042e-430d-9edc-94cf81765f81}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -28,6 +31,9 @@
     <ClCompile Include="World04.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="World05.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="World01.h">
@@ -40,6 +46,9 @@
       <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="World04.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="World05.h">
       <Filter>Source</Filter>
     </ClInclude>
   </ItemGroup>
@@ -103,6 +112,9 @@
     </None>
     <None Include="..\..\Build\Assets\Materials\squirrel.mtrl">
       <Filter>Materials</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\Scenes\scene.json">
+      <Filter>Scenes</Filter>
     </None>
   </ItemGroup>
 </Project>

@@ -38,12 +38,6 @@ namespace nc
     {
         ENGINE.GetSystem<Gui>()->BeginFrame();
 
-        ImGui::Begin("Transform");
-        ImGui::DragFloat3("Position", &m_transform.position[0], 0.1f);
-        ImGui::DragFloat3("Rotation", &m_transform.rotation[0]);
-        ImGui::DragFloat3("Scale", &m_transform.scale[0], 0.1f);
-        ImGui::End();
-
         ImGui::Begin("Scene");
         ImGui::ColorEdit3("Ambient Color", glm::value_ptr(m_ambientLight));
         ImGui::Separator();
