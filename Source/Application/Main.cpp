@@ -22,6 +22,21 @@ int main(int argc, char* argv[])
 	auto world = make_unique<nc::World05>();
 	world->Initialize();
 
+
+	std::string test = "BinGus";
+	std::string phrase = "Bingus is Best";
+
+	std::cout << nc::StringUtils::ToLower(test) << std::endl;
+	std::cout << nc::StringUtils::ToUpper(test) << std::endl;
+	std::cout << nc::StringUtils::IsEqualIgnoreCase(test, phrase) << std::endl;
+
+	std::cout << nc::StringUtils::CreateUnique(phrase) << std::endl;
+	std::cout << nc::StringUtils::CreateUnique(phrase) << std::endl;
+	std::cout << nc::StringUtils::CreateUnique(phrase) << std::endl;
+	std::cout << nc::StringUtils::CreateUnique(phrase) << std::endl;
+	std::cout << nc::StringUtils::CreateUnique(phrase) << std::endl;
+
+
 	// main loop
 	bool quit = false;
 	while (!quit)
