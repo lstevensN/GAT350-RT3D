@@ -23,7 +23,7 @@ int main(int argc, char* argv[])
 	world->Initialize();
 
 
-	std::string test = "BinGus";
+	/*std::string test = "BinGus";
 	std::string phrase = "Bingus is Best";
 
 	std::cout << nc::StringUtils::ToLower(test) << std::endl;
@@ -34,7 +34,7 @@ int main(int argc, char* argv[])
 	std::cout << nc::StringUtils::CreateUnique(phrase) << std::endl;
 	std::cout << nc::StringUtils::CreateUnique(phrase) << std::endl;
 	std::cout << nc::StringUtils::CreateUnique(phrase) << std::endl;
-	std::cout << nc::StringUtils::CreateUnique(phrase) << std::endl;
+	std::cout << nc::StringUtils::CreateUnique(phrase) << std::endl;*/
 
 
 	// main loop

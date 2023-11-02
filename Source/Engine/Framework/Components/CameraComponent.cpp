@@ -19,7 +19,7 @@ namespace nc
 
 	void CameraComponent::Update(float dt)
 	{
-		view = glm::lookAt(m_owner->transform.position, m_owner->transform.position + m_owner->transform.Forward(), glm::vec3{0, 1, 0});
+		view = glm::lookAt(m_owner->transform.position, m_owner->transform.position + m_owner->transform.Forward(), m_owner->transform.Up());
 		projection = glm::perspective(glm::radians(fov), aspect, near, far);
 	}
 

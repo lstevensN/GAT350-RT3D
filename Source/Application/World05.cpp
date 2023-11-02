@@ -14,18 +14,6 @@ namespace nc
         m_scene = std::make_unique<Scene>();
         m_scene->Load("scenes/scene.json");
         m_scene->Initialize();
-
-        /*{
-            auto actor = CREATE_CLASS(Actor);
-            actor->name = "actor2";
-            actor->transform.position = glm::vec3{ 0, 0, 0 };
-            auto modelComponent = CREATE_CLASS(ModelComponent);
-            modelComponent->model = std::make_shared<Model>();
-            modelComponent->model->SetMaterial(GET_RESOURCE(Material, "materials/squirrel.mtrl"));
-            modelComponent->model->Load("models/squirrel.glb", glm::vec3{ 0, -0.7f, 0 }, glm::vec3{ 0 }, glm::vec3{ 0.4f });
-            actor->AddComponent(std::move(modelComponent));
-            m_scene->Add(std::move(actor));
-        }*/
         
         {
         auto actor = CREATE_CLASS(Actor);
@@ -71,10 +59,12 @@ namespace nc
 
         auto actor = m_scene->GetActorByName<Actor>("actor1");
 
-        actor->transform.position.x += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_A) ? m_speed * -dt : 0;
-        actor->transform.position.x += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_D) ? m_speed *  dt : 0;
-        actor->transform.position.z += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_S) ? m_speed * -dt : 0;
-        actor->transform.position.z += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_W) ? m_speed *  dt : 0;
+        actor->transform.position.x += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_A) ?    m_speed * -dt : 0;
+        actor->transform.position.x += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_D) ?    m_speed *  dt : 0;
+        actor->transform.position.y += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_DOWN) ? m_speed * -dt : 0;
+        actor->transform.position.y += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_UP) ?   m_speed *  dt : 0;
+        actor->transform.position.z += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_S) ?    m_speed * -dt : 0;
+        actor->transform.position.z += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_W) ?    m_speed *  dt : 0;
 
         m_time += dt;
 
