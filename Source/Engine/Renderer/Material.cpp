@@ -111,6 +111,12 @@ namespace nc
 			normalTexture->SetActive(GL_TEXTURE3);
 			normalTexture->Bind();
 		}
+
+		if (cubemapTexture)
+		{
+			cubemapTexture->SetActive(GL_TEXTURE4);
+			cubemapTexture->Bind();
+		}
 	}
 
 	void Material::ProcessGUI()

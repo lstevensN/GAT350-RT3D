@@ -57,7 +57,7 @@ namespace nc
         m_scene->Update(dt);
         m_scene->ProcessGui();
 
-        auto actor = m_scene->GetActorByName<Actor>("actor1");
+        auto actor = m_scene->GetActorByName<Actor>("camera1");
 
         actor->transform.position.x += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_A) ?    m_speed * -dt : 0;
         actor->transform.position.x += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_D) ?    m_speed *  dt : 0;
@@ -68,10 +68,27 @@ namespace nc
 
         m_time += dt;
 
+        actor = m_scene->GetActorByName<Actor>("actor1");
+
         auto material = actor->GetComponent<ModelComponent>()->model->GetMaterial();
 
         material->ProcessGUI();
         material->Bind();
+
+        material = GET_RESOURCE(Material, "materials/refraction.mtrl");
+        if (material)
+        {
+            ImGui::Begin("Refraction");
+
+            m_refraction = 1.0f + std::fabs(std::sin(m_time * 0.1f));
+
+            ImGui::DragFloat("IOR", &m_refraction, 0.01f, 1.0f, 3.0f);
+            auto program = material->GetProgram();
+            program->Use();
+            program->SetUniform("ior", m_refraction);
+
+            ImGui::End();
+        }
 
         material->GetProgram()->SetUniform("ambientLight", m_ambientLight);
 

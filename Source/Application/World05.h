@@ -19,5 +19,6 @@ namespace nc
 		float m_speed = 5;
 
 		glm::vec3 m_ambientLight{ 0.2f };
+		float m_refraction{ 1 };
 	};
 }
