@@ -1,12 +1,12 @@
 {
   "program": "shaders/lit_phong_normal.prog",
-  "albedoTexture": "textures/ogre_diffuse.png",
+  "albedoTexture": "textures/ogre_diffuse.bmp",
   "emissiveTexture": "textures/ogre_emissive.bmp",
   "normalTexture": "textures/ogre_normal.bmp",
   "albedo": [
-    0.5,
-    0.5,
-    0.5
+    1,
+    1,
+    1
   ],
   "specular": [
     0.4,

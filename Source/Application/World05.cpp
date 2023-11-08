@@ -16,16 +16,23 @@ namespace nc
         m_scene->Initialize();
         
         {
-        auto actor = CREATE_CLASS(Actor);
-        actor->name = "camera1";
-        actor->transform.position = glm::vec3{ 0, 2, 8 };
-        actor->transform.rotation = glm::vec3{ 0, 180, 0 };
+            auto actor = CREATE_CLASS(Actor);
+            actor->name = "camera1";
+            actor->transform.position = glm::vec3{ 0, 2, 8 };
+            actor->transform.rotation = glm::radians(glm::vec3{ 0, 180, 0 });
 
-        auto cameraComponent = CREATE_CLASS(CameraComponent);
-        cameraComponent->SetPerspective(70.0f, ENGINE.GetSystem<Renderer>()->GetWidth() / (float)ENGINE.GetSystem<Renderer>()->GetHeight(), 0.1f, 100.0f);
-        actor->AddComponent(std::move(cameraComponent));
+            auto cameraComponent = CREATE_CLASS(CameraComponent);
+            cameraComponent->SetPerspective(70.0f, ENGINE.GetSystem<Renderer>()->GetWidth() / (float)ENGINE.GetSystem<Renderer>()->GetHeight(), 0.1f, 100.0f);
+            actor->AddComponent(std::move(cameraComponent));
 
-        m_scene->Add(std::move(actor));
+            auto cameraController = CREATE_CLASS(CameraController);
+            cameraController->speed = 5;
+            cameraController->sensitivity = 0.5;
+            cameraController->m_owner = actor.get();
+            cameraController->Initialize();
+            actor->AddComponent(std::move(cameraController));
+
+            m_scene->Add(std::move(actor));
         }
 
         {
@@ -43,6 +50,15 @@ namespace nc
             m_scene->Add(std::move(actor));
         }
 
+        for (int i = 0; i < 10; i++) {
+            auto actor = CREATE_CLASS_BASE(Actor, "tree");
+            actor->name = StringUtils::CreateUnique("tree");
+            actor->transform.position = glm::vec3{ randomf(-10, 10), 0, randomf(-10, 10) };
+            actor->transform.scale = glm::vec3{ randomf(0.5f, 1.3f), randomf(0.5f, 1.3f), 0 };
+            actor->Initialize();
+            m_scene->Add(std::move(actor));
+        }
+
         return true;
     }
 
@@ -57,20 +73,11 @@ namespace nc
         m_scene->Update(dt);
         m_scene->ProcessGui();
 
-        auto actor = m_scene->GetActorByName<Actor>("camera1");
-
-        actor->transform.position.x += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_A) ?    m_speed * -dt : 0;
-        actor->transform.position.x += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_D) ?    m_speed *  dt : 0;
-        actor->transform.position.y += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_DOWN) ? m_speed * -dt : 0;
-        actor->transform.position.y += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_UP) ?   m_speed *  dt : 0;
-        actor->transform.position.z += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_S) ?    m_speed * -dt : 0;
-        actor->transform.position.z += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_W) ?    m_speed *  dt : 0;
-
         m_time += dt;
 
-        actor = m_scene->GetActorByName<Actor>("actor1");
+        auto actor = m_scene->GetActorByName<Actor>("actor1");
 
-        auto material = actor->GetComponent<ModelComponent>()->model->GetMaterial();
+        auto material = actor->GetComponent<ModelComponent>()->material;
 
         material->ProcessGUI();
         material->Bind();
