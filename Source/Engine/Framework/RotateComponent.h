@@ -1,5 +1,6 @@
 #pragma once
 #include "Components/Component.h"
+#include "Actor.h"
 
 namespace nc
 {
@@ -10,5 +11,10 @@ namespace nc
 
 		bool Initialize() override;
 		void Update(float dt) override;
+
+		void ProcessGui();
+
+	private:
+		glm::vec3 euler{ 0 };
 	};
 }
