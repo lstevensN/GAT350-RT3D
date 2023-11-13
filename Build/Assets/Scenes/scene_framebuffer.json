@@ -52,7 +52,7 @@
 			"persistent": true,
 			"active": true,
 			"transform": {
-				"position": [ 0, 0, 0 ],
+				"position": [ 0, 2, 5 ],
 				"scale": [ 1, 1, 1 ],
 				"rotation": [ 0, 0, 0 ]
 			},
@@ -72,7 +72,7 @@
 			"type": "Actor",
 			"name": "postprocess",
 			"persistent": true,
-			"active": true,
+			"active": false,
 			"prototype": false,
 			"components": [
 				{

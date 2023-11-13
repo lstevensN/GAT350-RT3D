@@ -16,7 +16,7 @@ namespace nc
         m_scene->Initialize();
 
         auto texture = std::make_shared<Texture>();
-        texture->CreateTexture(256, 256);
+        texture->CreateTexture(2048, 2048);
         ADD_RESOURCE("fb_texture", texture);
 
         auto framebuffer = std::make_shared<Framebuffer>();
