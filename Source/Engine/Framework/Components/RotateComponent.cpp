@@ -20,7 +20,7 @@ namespace nc
 
     void RotateComponent::ProcessGui()
     {
-        ImGui::DragFloat3("Rotate", glm::value_ptr(euler), 1);
+        ImGui::DragFloat3("Rotate Speed", glm::value_ptr(euler), 1.0f);
     }
 
     void RotateComponent::Read(const json_t& value)
