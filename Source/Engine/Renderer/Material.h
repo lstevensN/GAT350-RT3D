@@ -29,7 +29,7 @@ namespace nc
 
 	public:
 		uint32_t params{ 0 };
-		glm::vec3 albedo{ 1 };
+		glm::vec3 albedo{ 0 };
 		glm::vec3 specular{ 1 };
 		glm::vec3 emissive{ 0 };
 		float shininess = 2;

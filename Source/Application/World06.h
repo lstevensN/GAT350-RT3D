@@ -26,7 +26,7 @@ namespace nc
 
 		uint32_t m_params{ 0 };
 
-		glm::vec3 m_ambientLight{ 0.2f };
+		glm::vec3 m_ambientLight{ 1.0f };
 		float m_refraction{ 1 };
 	};
 }

@@ -8,15 +8,10 @@
     1,
     1
   ],
-  "specular": [
+  "emissive": [
     1,
     1,
     1
-  ],
-  "emissive": [
-    0,
-    0,
-    0
   ],
   "shininess": 60,
   "tiling": [ 1, 1 ],

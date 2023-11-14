@@ -111,7 +111,7 @@ void main()
  
 		vec3 normal = texture(normalTexture, ftexcoord).rgb;
 		normal = (normal * 2) - 1; // (0 - 1) -> (-1 - +1) 
-		normal += normalize(ftbn * normal); 
+		normal = normalize(ftbn * normal); 
 
 		phong(lights[i], fposition, normal, diffuse, specular);
 		ocolor += ((vec4(diffuse, 1) * albedoColor) + vec4(specular, 1)) * specularColor * lights[i].intensity * attenuation;

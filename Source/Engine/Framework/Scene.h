@@ -33,7 +33,7 @@ namespace nc
 
 		friend class Actor;
 
-		glm::vec3 ambientColor;
+		glm::vec3 ambientColor{ 0.67f, 0.67f, 1.0f };
 
 	private:
 		World* m_game = nullptr;
