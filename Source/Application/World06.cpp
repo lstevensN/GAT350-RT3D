@@ -51,22 +51,23 @@ namespace nc
         ImGui::SliderFloat("Blend", &m_blend, 0, 1);
 
         bool effect = m_params & INVERT_MASK;
-        if (ImGui::Checkbox("Invert", &effect))
-        {
-            (effect) ? m_params |= INVERT_MASK : m_params &= ~INVERT_MASK;
-        }
+        if (ImGui::Checkbox("Invert", &effect)) { (effect) ? m_params |= INVERT_MASK : m_params &= ~INVERT_MASK; }
         
         effect = m_params & GRAYSCALE_MASK;
-        if (ImGui::Checkbox("Grayscale", &effect))
-        {
-            (effect) ? m_params |= GRAYSCALE_MASK : m_params &= ~GRAYSCALE_MASK;
-        }
+        if (ImGui::Checkbox("Grayscale", &effect)) { (effect) ? m_params |= GRAYSCALE_MASK : m_params &= ~GRAYSCALE_MASK; }
         
         effect = m_params & COLOR_TINT_MASK;
-        if (ImGui::Checkbox("Color Tint", &effect))
-        {
-            (effect) ? m_params |= COLOR_TINT_MASK : m_params &= ~COLOR_TINT_MASK;
-        }
+        if (ImGui::Checkbox("Color Tint", &effect)) { (effect) ? m_params |= COLOR_TINT_MASK : m_params &= ~COLOR_TINT_MASK; }
+        ImGui::ColorEdit3("Tint", glm::value_ptr(m_tint));
+
+        effect = m_params & GRAIN_MASK;
+        if (ImGui::Checkbox("Grain", &effect)) { (effect) ? m_params |= GRAIN_MASK : m_params &= ~GRAIN_MASK; }
+
+        effect = m_params & SCANLINE_MASK;
+        if (ImGui::Checkbox("Scanline", &effect)) { (effect) ? m_params |= SCANLINE_MASK : m_params &= ~SCANLINE_MASK; }
+
+        effect = m_params & CUSTOM_MASK;
+        if (ImGui::Checkbox("Custom", &effect)) { (effect) ? m_params |= CUSTOM_MASK : m_params &= ~CUSTOM_MASK; }
 
         ImGui::End();
 
@@ -77,6 +78,8 @@ namespace nc
             program->Use();
             program->SetUniform("blend", m_blend);
             program->SetUniform("params", m_params);
+            program->SetUniform("tint", m_tint);
+            program->SetUniform("time", m_time);
         }
 
         ENGINE.GetSystem<Gui>()->EndFrame();
