@@ -54,9 +54,9 @@ vec4 custom(in vec4 color)
 {
 	float kernel[9] = float[]
 	(
-		-1, -1, -1,
-		-1,  5, -1,
-		-1, -1, -1
+		 0, -1,  0,
+		-1,  4, -1,
+		 0, -1,  0
 	);
 
 	// taken from https://www.turais.de/using-shaders-image-post-processing-with-convolution/ (thank you for the link)
@@ -80,7 +80,7 @@ vec4 custom(in vec4 color)
         sum += texture(screenTexture, ftexcoord + offsets[i]) * kernel[i];
     }
 
-	sum.a = color.a;
+	sum.a = 1.0;
 	return sum;
 }
 
@@ -91,12 +91,12 @@ void main()
 	vec4 basecolor = texture(screenTexture, ftexcoord);
 	vec4 postprocess = basecolor;
 
+	if (bool(params & CUSTOM_MASK))	     postprocess = custom(postprocess);
 	if (bool(params & INVERT_MASK))      postprocess = invert(postprocess);
 	if (bool(params & GRAYSCALE_MASK))   postprocess = grayscale(postprocess);
 	if (bool(params & COLOR_TINT_MASK))  postprocess = ctint(postprocess);
 	if (bool(params & GRAIN_MASK))       postprocess = grain(postprocess);
 	if (bool(params & SCANLINE_MASK))    postprocess = scanline(postprocess);
-	if (bool(params & CUSTOM_MASK))	     postprocess = custom(postprocess);
 
 	ocolor = mix(basecolor, postprocess, blend);
 }
