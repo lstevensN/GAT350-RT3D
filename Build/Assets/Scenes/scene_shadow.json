@@ -16,8 +16,7 @@
 					"fov": 70.0,
 					"aspect": 1.33,
 					"near": 0.1,
-					"far": 100.0,
-					"projectionType": "Orthographic"
+					"far": 100.0
 				},
 				{
 					"type": "CameraController",
@@ -32,18 +31,19 @@
 			"persistent": true,
 			"active": true,
 			"transform": {
-				"position": [ 0, 0, 0 ],
-				"scale": [ 1, 1, 1 ],
-				"rotation": [ 0, 0, 0 ]
+				"position": [ 0, 3, 0 ],
+				"rotation": [ 90, 0, 0 ]
 			},
 			"components": [
 				{
 					"type": "LightComponent",
+					"lightType": "directional",
 					"color": [ 1, 1, 1 ],
 					"intensity": 1.0,
 					"range": 20,
 					"innerAngle": 10.0,
-					"outerAngle": 30.0
+					"outerAngle": 30.0,
+					"castShadow": true
 				}
 			]
 		},
@@ -71,7 +71,7 @@
 		},
 		{
 			"type": "Actor",
-			"name": "grass",
+			"name": "ground",
 			"persistent": true,
 			"active": true,
 			"transform": {
@@ -84,10 +84,24 @@
 					"type": "ModelComponent",
 					"modelName": "fantasy/obj/SF_Env_Tile_Grass_01.obj",
 					"materialName": "fantasy/fantasy.mtrl"
-				},
+				}
+			]
+		},
+		{
+			"type": "Actor",
+			"name": "depth_debug",
+			"persistent": true,
+			"active": true,
+			"transform": {
+				"position": [ 2.4, 1.4, 0 ],
+				"scale": [ 1, 1, 1 ],
+				"rotation": [ 0, 0, 0 ]
+			},
+			"components": [
 				{
-					"type": "RotateComponent",
-					"rotation": [ 0, 0, 0 ]
+					"type": "ModelComponent",
+					"modelName": "models/quad.obj",
+					"materialName": "materials/sprite.mtrl"
 				}
 			]
 		},

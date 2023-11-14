@@ -29,7 +29,7 @@ namespace nc
 
 	public:
 		uint32_t params{ 0 };
-		glm::vec3 albedo{ 0 };
+		glm::vec3 albedo{ 1 };
 		glm::vec3 specular{ 1 };
 		glm::vec3 emissive{ 0 };
 		float shininess = 2;
@@ -42,6 +42,7 @@ namespace nc
 		res_t<Texture> normalTexture;
 		res_t<Texture> emissiveTexture;
 		res_t<Texture> cubemapTexture;
+		res_t<Texture> depthTexture;
 
 	private:
 		res_t<Program> m_program;

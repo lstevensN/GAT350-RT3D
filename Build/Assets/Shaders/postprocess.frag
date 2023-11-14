@@ -77,7 +77,7 @@ vec4 custom(in vec4 color)
 
 	vec4 sum = vec4(0.0);
     for(int i = 0; i < 9; i++) {
-        sum += texture(screenTexture, color.a + offsets[i]) * kernel[i];
+        sum += texture(screenTexture, ftexcoord + offsets[i]) * kernel[i];
     }
 
 	sum.a = color.a;

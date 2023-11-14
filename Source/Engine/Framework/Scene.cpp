@@ -31,10 +31,11 @@ namespace nc
 		// get camera component
 		auto cameras = GetComponents<CameraComponent>();
 
-		CameraComponent* camera = (!cameras.empty()) ? cameras[0] : nullptr ;
+		// get first active camera component
+		CameraComponent* camera = (!cameras.empty()) ? cameras[0] : nullptr;
 
 		// get all shader programs in the resource system
-		auto programs = ResourceManager::Instance().GetAllOfType<Program>();
+		auto programs = GET_RESOURCES(Program);
 
 		// set all shader programs camera and lights uniforms
 		for (auto& program : programs)
