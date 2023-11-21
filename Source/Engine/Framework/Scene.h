@@ -1,5 +1,6 @@
 #pragma once
 #include "Actor.h"
+#include "Editor.h"
 #include <list>
 #include <vector>
 
@@ -18,6 +19,7 @@ namespace nc
 		void Draw(Renderer& renderer);
 
 		void Add(std::unique_ptr<Actor> actor);
+		void Remove(Actor* actor);
 		void RemoveAll(bool force = false);
 
 		bool Load(const std::string& filename);
@@ -35,10 +37,13 @@ namespace nc
 		void ProcessGui();
 
 		friend class Actor;
+		friend class Editor;
 
 		glm::vec3 ambientColor{ 0.67f, 0.67f, 1.0f };
 
 	private:
+		float m_dt{ 0 };
+
 		World* m_game = nullptr;
 		std::list<std::unique_ptr<Actor>> m_actors;
 	};
