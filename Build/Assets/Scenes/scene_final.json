@@ -1,0 +1,93 @@
+{
+  "actors": [
+    {
+      "type": "Actor",
+      "name": "camera",
+      "persistent": true,
+      "active": true,
+      "transform": {
+        "position": [ 0, 2, 8 ],
+        "scale": [ 1, 1, 1 ],
+        "rotation": [ 0, 180, 0 ]
+      },
+      "components": [
+        {
+          "type": "CameraComponent",
+          "fov": 70.0,
+          "aspect": 1.33,
+          "near": 0.1,
+          "far": 100.0
+        },
+        {
+          "type": "CameraController",
+          "speed": 5,
+          "sensitivity": 0.5
+        }
+      ]
+    },
+    {
+      "type": "Actor",
+      "name": "light",
+      "persistent": true,
+      "active": false,
+      "transform": {
+        "position": [ 0, 3, -3 ],
+        "rotation": [ 60, 30, 0 ],
+        "scale": [ 0.1, 0.1, 0.1 ]
+      },
+      "components": [
+        {
+          "type": "LightComponent",
+          "lightType": "directional",
+          "color": [ 1, 1, 1 ],
+          "intensity": 1.0,
+          "range": 20,
+          "innerAngle": 10.0,
+          "outerAngle": 30.0,
+          "castShadow": true
+        },
+        {
+          "type": "ModelComponent",
+          "modelName": "models/quad.obj",
+          "materialName": "materials/ui_light.mtrl"
+        }
+      ]
+    },
+    {
+      "type": "Actor",
+      "name": "ground",
+      "persistent": true,
+      "active": true,
+      "transform": {
+        "position": [ -3, 0, 0 ],
+        "scale": [ 1, 1, 1 ],
+        "rotation": [ 0, 0, 0 ]
+      },
+      "components": [
+        {
+          "type": "ModelComponent",
+          "modelName": "fantasy/obj/SF_Env_Tile_Grass_01.obj",
+          "materialName": "materials/fantasy_cel.mtrl"
+        }
+      ]
+    },
+    {
+      "type": "Actor",
+      "name": "depth_debug",
+      "persistent": true,
+      "active": false,
+      "transform": {
+        "position": [ 2.4, 1.4, 0 ],
+        "scale": [ 1, 1, 1 ],
+        "rotation": [ 0, 0, 0 ]
+      },
+      "components": [
+        {
+          "type": "ModelComponent",
+          "modelName": "models/quad.obj",
+          "materialName": "materials/sprite.mtrl"
+        }
+      ]
+    }
+  ]
+}

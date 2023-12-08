@@ -1,4 +1,4 @@
-#include "World08.h"
+#include "World09.h"
 #include "Framework/Framework.h"
 #include "Input/InputSystem.h"
 
@@ -9,11 +9,11 @@
 
 namespace nc
 {
-    bool World08::Initialize()
+    bool World09::Initialize()
     {
         m_scene = std::make_unique<Scene>();
         m_scene->Load("scenes/scene_editor.json");
-        m_scene->Load("scenes/scene_shadow.json");
+        m_scene->Load("scenes/scene_final.json");
         m_scene->Initialize();
 
         m_editor = std::make_unique<Editor>();
@@ -31,12 +31,12 @@ namespace nc
         return true;
     }
 
-    void World08::Shutdown()
+    void World09::Shutdown()
     {
 
     }
 
-    void World08::Update(float dt)
+    void World09::Update(float dt)
     {
         m_time += dt;
 
@@ -47,10 +47,25 @@ namespace nc
         m_editor->Update();
         m_editor->ProcessGui(m_scene.get());
 
+        ImGui::Begin("Cel");
+        ImGui::SliderInt("Levels", &m_celLevels, 1, 8);
+        ImGui::SliderFloat("Specular Cutoff", &m_specularCutoff, 0, 1);
+        ImGui::SliderFloat("Outline", &m_celOutline, 0, 1);
+        ImGui::End();
+
+        auto program = GET_RESOURCE(Program, "shaders/lit_phong_cel.prog");
+        if (program)
+        {
+            program->Use();
+            program->SetUniform("celLevels", m_celLevels);
+            program->SetUniform("celSpecularCutoff", m_specularCutoff);
+            program->SetUniform("celOutline", m_celOutline);
+        }
+
         ENGINE.GetSystem<Gui>()->EndFrame();
     }
 
-    void World08::Draw(Renderer& renderer)
+    void World09::Draw(Renderer& renderer)
     {
         // *** PASS 1 *** //
         auto framebuffer = GET_RESOURCE(Framebuffer, "depth_buffer");

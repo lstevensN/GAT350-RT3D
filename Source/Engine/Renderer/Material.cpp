@@ -3,6 +3,7 @@
 #include "Texture.h"
 #include "Core/Core.h"
 #include "Cubemap.h"
+#include <imgui/ImFileDialog.h>
 
 namespace nc
 {
@@ -28,36 +29,30 @@ namespace nc
 		std::string albedoTextureName;
 		if (READ_NAME_DATA(document, "albedoTexture", albedoTextureName))
 		{ 
-			params |= ALBEDO_TEXTURE_MASK;
 			albedoTexture = GET_RESOURCE(Texture, albedoTextureName);
 		}
 
 		std::string specularTextureName;
 		if (READ_NAME_DATA(document, "specularTexture", specularTextureName))
 		{ 
-			params |= SPECULAR_TEXTURE_MASK;
 			specularTexture = GET_RESOURCE(Texture, specularTextureName);
 		}
 
 		std::string emissiveTextureName;
 		if (READ_NAME_DATA(document, "emissiveTexture", emissiveTextureName))
 		{ 
-			params |= EMISSIVE_TEXTURE_MASK;
 			emissiveTexture = GET_RESOURCE(Texture, emissiveTextureName);
 		}
 
 		std::string normalTextureName;
 		if (READ_NAME_DATA(document, "normalTexture", normalTextureName))
 		{ 
-			params |= NORMAL_TEXTURE_MASK;
 			normalTexture = GET_RESOURCE(Texture, normalTextureName);
 		}
 
 		std::string cubemapName;
 		if (READ_NAME_DATA(document, "cubemap", cubemapName))
 		{
-			params |= CUBEMAP_TEXTURE_MASK;
-
 			std::vector<std::string> cubemaps;
 			READ_DATA(document, cubemaps);
 
@@ -90,30 +85,35 @@ namespace nc
 
 		if (albedoTexture)
 		{
+			params |= ALBEDO_TEXTURE_MASK;
 			albedoTexture->SetActive(GL_TEXTURE0);
 			albedoTexture->Bind();
 		}
 
 		if (specularTexture)
 		{
+			params |= SPECULAR_TEXTURE_MASK;
 			specularTexture->SetActive(GL_TEXTURE1);
 			specularTexture->Bind();
 		}
 
 		if (emissiveTexture)
 		{
+			params |= EMISSIVE_TEXTURE_MASK;
 			emissiveTexture->SetActive(GL_TEXTURE2);
 			emissiveTexture->Bind();
 		}
 
 		if (normalTexture)
 		{
+			params |= NORMAL_TEXTURE_MASK;
 			normalTexture->SetActive(GL_TEXTURE3);
 			normalTexture->Bind();
 		}
 
 		if (cubemapTexture)
 		{
+			params |= CUBEMAP_TEXTURE_MASK;
 			cubemapTexture->SetActive(GL_TEXTURE4);
 			cubemapTexture->Bind();
 		}
@@ -129,44 +129,39 @@ namespace nc
 	{
 		ImGui::TextColored(ImVec4{ 0, 1, 0, 1 }, "Name: %s", name.c_str());
 
+		// shader
+		ImGui::Text("Shader:");
+		ImGui::SameLine();
+		ImGui::Text("%s", m_program->name.c_str());
+		Gui::GetDialogResource<Program>(m_program, "ShaderTextureDialog", "Open Shader", "Shader file (*.prog){.prog},.*");
+
 		// albedo
 		ImGui::Text("Albedo  ");
 		ImGui::SameLine();
 		ImGui::ColorEdit3("Albedo", glm::value_ptr(albedo), ImGuiColorEditFlags_NoLabel | ImGuiColorEditFlags_NoInputs);
-		if (albedoTexture)
-		{
-			ImGui::SameLine();
-			ImGui::Text("%s", albedoTexture->name.c_str());
-		}
+		ImGui::SameLine();
+		(albedoTexture) ? ImGui::Text("%s", albedoTexture->name.c_str()) : ImGui::Text("None");
+		Gui::GetDialogResource<Texture>(albedoTexture, "AlbedoTextureDialog", "Open texture", "Image file (*.png;*.jpg;*.jpeg;*.bmp;*.tga){.png,.jpg,.jpeg,.bmp,.tga},.*");
 
 		// specular
 		ImGui::Text("Specular  ");
 		ImGui::SameLine();
 		ImGui::ColorEdit3("Specular", glm::value_ptr(specular), ImGuiColorEditFlags_NoLabel | ImGuiColorEditFlags_NoInputs);
-		if (specularTexture)
-		{
-			ImGui::SameLine();
-			ImGui::Text("%s", specularTexture->name.c_str());
-		}
+		ImGui::SameLine();
+		(specularTexture) ? ImGui::Text("%s", specularTexture->name.c_str()) : ImGui::Text("None");
+
 		ImGui::DragFloat2("Shininess", &shininess, 0.1f, 2.0f, 200.0f);
 
 		// emissive
 		ImGui::Text("Emissive  ");
 		ImGui::SameLine();
 		ImGui::ColorEdit3("Emissive", glm::value_ptr(emissive), ImGuiColorEditFlags_NoLabel | ImGuiColorEditFlags_NoInputs);
-		if (emissiveTexture)
-		{
-			ImGui::SameLine();
-			ImGui::Text("%s", emissiveTexture->name.c_str());
-		}
+		ImGui::SameLine();
+		(emissiveTexture) ? ImGui::Text("%s", emissiveTexture->name.c_str()) : ImGui::Text("None");
 
 		// normal
 		ImGui::Text("Normal  ");
-		if (normalTexture)
-		{
-			ImGui::SameLine();
-			ImGui::Text("%s", normalTexture->name.c_str());
-		}
+		(normalTexture) ? ImGui::Text("%s", normalTexture->name.c_str()) : ImGui::Text("None");
 
 		// UV
 		ImGui::DragFloat2("Tiling", glm::value_ptr(tiling), 0.1f);
